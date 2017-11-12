@@ -84,6 +84,16 @@ class RunbookAggregateTest {
     }
 
     @Test
+    fun `can reject task`() {
+        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
+
+        runbook.rejectTask(TASK_ID, OWNER_ID)
+
+        assertThat(runbook.tasks[TASK_ID]?.isRejected()).isTrue()
+    }
+
+    @Test
     fun `cannot complete runbook if not the owner`() {
         val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
 
@@ -109,6 +119,18 @@ class RunbookAggregateTest {
         exception.expect(RunBookWithPendingTasksException::class.java)
 
         runbook.completeRunbook(OWNER_ID)
+    }
+
+    @Test
+    fun `can complete with all tasks completed`() {
+        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
+        runbook.startTask(TASK_ID, TASK_ASSIGNEE_ID)
+        runbook.completeTask(TASK_ID, TASK_ASSIGNEE_ID)
+
+        runbook.completeRunbook(OWNER_ID)
+
+        assertThat(runbook.isCompleted()).isTrue()
     }
 
 }

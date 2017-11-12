@@ -28,6 +28,10 @@ class RunbookAggregate(
         tasks[taskId]?.completeTask()
     }
 
+    fun rejectTask(taskId: String, userId: String) {
+        tasks[taskId]?.rejectTask()
+    }
+
     fun completeRunbook(userId: String) {
         if (userId != ownerId) {
             throw RunbookOwnedByDifferentUserException()

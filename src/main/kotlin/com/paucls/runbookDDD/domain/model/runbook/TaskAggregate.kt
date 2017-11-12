@@ -10,6 +10,7 @@ class TaskAggregate(
         val OPEN = "OPEN"
         val IN_PROGRESS = "IN_PROGRESS"
         val COMPLETED = "COMPLETED"
+        val REJECTED = "REJECTED"
     }
 
     private var status = OPEN
@@ -30,7 +31,13 @@ class TaskAggregate(
         status = COMPLETED
     }
 
+    fun rejectTask() {
+        status = REJECTED
+    }
+
     fun isInProgress(): Boolean = status == IN_PROGRESS
 
     fun isCompleted(): Boolean = status == COMPLETED
+
+    fun isRejected(): Boolean = status == REJECTED
 }
