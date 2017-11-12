@@ -1,5 +1,6 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
+import com.paucls.runbookDDD.api.runbook.CanOnlyCompleteInProgressTaskException
 import com.paucls.runbookDDD.api.runbook.TaskAssignedToDifferentUserException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
@@ -70,6 +71,18 @@ class RunbookAggregateTest {
         runbook.completeTask(TASK_ID, TASK_ASSIGNEE_ID)
 
         assertThat(runbook.tasks[TASK_ID]?.isCompleted()).isTrue()
+    }
+
+    @Test
+    fun `cannot complete task that is not in progress`() {
+        // Given
+        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
+
+        exception.expect(CanOnlyCompleteInProgressTaskException::class.java)
+
+        // When
+        runbook.completeTask(TASK_ID, TASK_ASSIGNEE_ID)
     }
 
 }

@@ -1,5 +1,6 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
+import com.paucls.runbookDDD.api.runbook.CanOnlyCompleteInProgressTaskException
 import com.paucls.runbookDDD.api.runbook.TaskAssignedToDifferentUserException
 
 class TaskAggregate(
@@ -25,6 +26,10 @@ class TaskAggregate(
     }
 
     fun completeTask() {
+        if (!isInProgress()) {
+            throw CanOnlyCompleteInProgressTaskException()
+        }
+
         status = COMPLETED
     }
 
