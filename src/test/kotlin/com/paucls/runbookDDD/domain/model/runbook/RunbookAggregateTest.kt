@@ -1,7 +1,6 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
 import com.paucls.runbookDDD.api.runbook.CanOnlyCompleteInProgressTaskException
-import com.paucls.runbookDDD.api.runbook.TaskAssignedToDifferentUserException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -28,7 +27,7 @@ class RunbookAggregateTest {
         assertThat(newRunbook.runbookId).isEqualTo(RUNBOOK_ID)
         assertThat(newRunbook.name).isEqualTo(RUNBOOK_NAME)
         assertThat(newRunbook.ownerId).isEqualTo(OWNER_ID)
-        assertThat(newRunbook.isCompleted).isFalse()
+        assertThat(newRunbook.isCompleted()).isFalse()
     }
 
     @Test
@@ -83,6 +82,25 @@ class RunbookAggregateTest {
 
         // When
         runbook.completeTask(TASK_ID, TASK_ASSIGNEE_ID)
+    }
+
+    @Test
+    fun `can complete empty runbook`() {
+        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+
+        runbook.completeRunbook(OWNER_ID)
+
+        assertThat(runbook.isCompleted()).isTrue()
+    }
+
+    @Test
+    fun `cannot complete runbook with pending tasks`() {
+        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
+
+        exception.expect(RunBookWithPendingTasksException::class.java)
+
+        runbook.completeRunbook(OWNER_ID)
     }
 
 }

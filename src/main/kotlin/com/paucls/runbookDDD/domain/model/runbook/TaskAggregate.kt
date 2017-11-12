@@ -1,8 +1,5 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
-import com.paucls.runbookDDD.api.runbook.CanOnlyCompleteInProgressTaskException
-import com.paucls.runbookDDD.api.runbook.TaskAssignedToDifferentUserException
-
 class TaskAggregate(
         val taskId: String,
         val name: String,
