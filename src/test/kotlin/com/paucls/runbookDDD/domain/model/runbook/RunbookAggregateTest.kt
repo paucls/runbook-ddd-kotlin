@@ -50,13 +50,11 @@ class RunbookAggregateTest {
 
     @Test
     fun `cannot start task assigned to different user`() {
-        // Given
         val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
         exception.expect(TaskAssignedToDifferentUserException::class.java)
 
-        // When
         runbook.startTask(TASK_ID, "no-assignee-user-id")
     }
 
@@ -73,13 +71,11 @@ class RunbookAggregateTest {
 
     @Test
     fun `cannot complete task that is not in progress`() {
-        // Given
         val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
         exception.expect(CanOnlyCompleteInProgressTaskException::class.java)
 
-        // When
         runbook.completeTask(TASK_ID, TASK_ASSIGNEE_ID)
     }
 
