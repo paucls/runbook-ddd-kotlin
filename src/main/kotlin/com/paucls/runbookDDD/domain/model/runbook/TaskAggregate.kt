@@ -1,5 +1,7 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
+import com.paucls.runbookDDD.api.runbook.TaskAssignedToDifferentUserException
+
 class TaskAggregate(
         val taskId: String,
         val name: String,
@@ -14,7 +16,11 @@ class TaskAggregate(
 
     private var status = OPEN
 
-    fun startTask() {
+    fun startTask(userId: String) {
+        if (userId != assigneeId) {
+            throw TaskAssignedToDifferentUserException()
+        }
+
         status = IN_PROGRESS
     }
 

@@ -14,7 +14,7 @@ class RunbookAggregate(
     }
 
     fun startTask(taskId: String, userId: String) {
-        tasks[taskId]?.startTask()
+        tasks[taskId]?.startTask(userId)
     }
 
     fun completeTask(taskId: String, userId: String) {

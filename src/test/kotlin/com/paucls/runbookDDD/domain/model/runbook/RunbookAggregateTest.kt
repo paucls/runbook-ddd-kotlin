@@ -1,7 +1,10 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
+import com.paucls.runbookDDD.api.runbook.TaskAssignedToDifferentUserException
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExpectedException
 
 class RunbookAggregateTest {
 
@@ -11,7 +14,11 @@ class RunbookAggregateTest {
     private val TASK_ID = "task-id"
     private val TASK_NAME = "task-name"
     private val TASK_DESCRIPTION = "task-description"
-    private val ASSIGNEE_ID = "assignee-id"
+    private val TASK_ASSIGNEE_ID = "assignee-id"
+
+    @Rule
+    @JvmField
+    val exception = ExpectedException.none()
 
     @Test
     fun `can create runbook`() {
@@ -27,7 +34,7 @@ class RunbookAggregateTest {
     fun `can add task`() {
         val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
 
-        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, ASSIGNEE_ID)
+        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
         assertThat(runbook.tasks.size).isOne()
     }
@@ -35,20 +42,32 @@ class RunbookAggregateTest {
     @Test
     fun `can start task`() {
         val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
-        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, ASSIGNEE_ID)
+        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
-        runbook.startTask(TASK_ID, ASSIGNEE_ID)
+        runbook.startTask(TASK_ID, TASK_ASSIGNEE_ID)
 
         assertThat(runbook.tasks[TASK_ID]?.isInProgress()).isTrue()
     }
 
     @Test
+    fun `cannot start task assigned to different user`() {
+        // Given
+        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
+
+        exception.expect(TaskAssignedToDifferentUserException::class.java)
+
+        // When
+        runbook.startTask(TASK_ID, "user-id-2")
+    }
+
+    @Test
     fun `can complete task`() {
         val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
-        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, ASSIGNEE_ID)
-        runbook.startTask(TASK_ID, ASSIGNEE_ID)
+        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
+        runbook.startTask(TASK_ID, TASK_ASSIGNEE_ID)
 
-        runbook.completeTask(TASK_ID, ASSIGNEE_ID)
+        runbook.completeTask(TASK_ID, TASK_ASSIGNEE_ID)
 
         assertThat(runbook.tasks[TASK_ID]?.isCompleted()).isTrue()
     }
