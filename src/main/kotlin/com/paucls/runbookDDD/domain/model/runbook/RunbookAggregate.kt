@@ -15,9 +15,6 @@ class RunbookAggregate(
         val COMPLETED = "COMPLETED"
     }
 
-    // TODO: using kotlin-jpa plugin it should not be needed a default constructor
-    private constructor() : this("", "", "")
-
     private var status = OPEN
     val tasks = HashMap<String, TaskAggregate>()
 
