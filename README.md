@@ -11,6 +11,8 @@ A task can be marked in progress only by the task assignee. An in-progress task 
 When all tasks in the runbook are completed and/or rejected, a runbook can be marked as completed.
 To keep it simple, there are no dependencies between tasks thus can be completed in any order.
 
+![Event Storming](docs/event_storming.png)
+
 ## Documentation
 Links to some of the articles and documentation used to implement this project:
 
