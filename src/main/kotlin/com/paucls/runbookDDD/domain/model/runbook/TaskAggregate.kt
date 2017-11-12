@@ -1,6 +1,11 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
+import javax.persistence.Entity
+import javax.persistence.Id
+
+@Entity
 class TaskAggregate(
+        @Id
         val taskId: String,
         val name: String,
         val description: String,

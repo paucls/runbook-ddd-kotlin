@@ -1,6 +1,11 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
+import javax.persistence.Entity
+import javax.persistence.Id
+
+@Entity
 class RunbookAggregate(
+        @Id
         val runbookId: String,
         val name: String,
         val ownerId: String
@@ -9,6 +14,9 @@ class RunbookAggregate(
         val OPEN = "OPEN"
         val COMPLETED = "COMPLETED"
     }
+
+    // TODO: using kotlin-jpa plugin it should not be needed a default constructor
+    private constructor() : this("", "", "")
 
     private var status = OPEN
     val tasks = HashMap<String, TaskAggregate>()
