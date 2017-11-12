@@ -29,6 +29,10 @@ class RunbookAggregate(
     }
 
     fun completeRunbook(userId: String) {
+        if (userId != ownerId) {
+            throw RunbookOwnedByDifferentUserException()
+        }
+
         val hasPendingTask = tasks.values.any { !it.isCompleted() }
         if (hasPendingTask) {
             throw RunBookWithPendingTasksException()

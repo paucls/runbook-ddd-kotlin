@@ -1,6 +1,5 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
-import com.paucls.runbookDDD.api.runbook.CanOnlyCompleteInProgressTaskException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -58,7 +57,7 @@ class RunbookAggregateTest {
         exception.expect(TaskAssignedToDifferentUserException::class.java)
 
         // When
-        runbook.startTask(TASK_ID, "user-id-2")
+        runbook.startTask(TASK_ID, "no-assignee-user-id")
     }
 
     @Test
@@ -82,6 +81,15 @@ class RunbookAggregateTest {
 
         // When
         runbook.completeTask(TASK_ID, TASK_ASSIGNEE_ID)
+    }
+
+    @Test
+    fun `cannot complete runbook if not the owner`() {
+        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+
+        exception.expect(RunbookOwnedByDifferentUserException::class.java)
+
+        runbook.completeRunbook("no-owner-user-id")
     }
 
     @Test
