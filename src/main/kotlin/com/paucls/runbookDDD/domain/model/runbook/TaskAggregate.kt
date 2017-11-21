@@ -1,5 +1,6 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
 
@@ -17,6 +18,10 @@ class TaskAggregate(
         val COMPLETED = "COMPLETED"
         val REJECTED = "REJECTED"
     }
+
+    // Used by JPA
+    @Column(name = "runbook_id")
+    private lateinit var runbookId: String
 
     private var status = OPEN
 

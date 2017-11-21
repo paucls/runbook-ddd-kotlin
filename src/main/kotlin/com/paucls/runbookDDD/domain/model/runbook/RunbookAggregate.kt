@@ -1,7 +1,6 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
-import javax.persistence.Entity
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 class RunbookAggregate(
@@ -16,7 +15,10 @@ class RunbookAggregate(
     }
 
     private var status = OPEN
-    val tasks = HashMap<String, TaskAggregate>()
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    @JoinColumn(name = "runbook_id")
+    val tasks: MutableMap<String, TaskAggregate> = HashMap<String, TaskAggregate>()
 
     fun isCompleted() = status == COMPLETED
 
