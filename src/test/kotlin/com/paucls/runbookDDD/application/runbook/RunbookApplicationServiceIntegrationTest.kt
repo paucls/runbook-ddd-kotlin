@@ -30,7 +30,7 @@ class RunbookApplicationServiceIntegrationTest {
     @Test
     fun `create runbook`() {
         val runbookId = runbookApplicationService.createRunbook(
-                CreateRunbookCommand(RUNBOOK_NAME, OWNER_ID))
+                CreateRunbook(RUNBOOK_NAME, OWNER_ID))
 
         val newRunbook = runbookRepository.findById(runbookId).get()
 

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class RunbookApplicationService(val runbookRepository: RunbookRepository) {
 
-    fun createRunbook(c: CreateRunbookCommand): String {
+    fun createRunbook(c: CreateRunbook): String {
         val runbookId = runbookRepository.nextIdentity()
 
         val runbook = RunbookAggregate(runbookId, c.name, c.ownerId)
