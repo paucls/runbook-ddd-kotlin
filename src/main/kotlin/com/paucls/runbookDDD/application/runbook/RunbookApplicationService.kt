@@ -16,8 +16,8 @@ class RunbookApplicationService(
         val runbookId = runbookRepository.nextIdentity()
 
         val runbook = RunbookAggregate(runbookId, c.name, c.ownerId)
-        runbookRepository.save(runbook)
 
+        runbookRepository.save(runbook)
         return runbookId
     }
 
@@ -26,8 +26,32 @@ class RunbookApplicationService(
         val taskId = taskRepository.nextIdentity()
 
         runbook.addTask(taskId, c.name, c.description, c.assigneeId)
-        runbookRepository.save(runbook)
 
+        runbookRepository.save(runbook)
         return taskId
+    }
+
+    fun completeRunbook(c: CompleteRunbook) {
+        val runbook = runbookRepository.findById(c.runbookId).get()
+
+        runbook.completeRunbook(c.userId)
+
+        runbookRepository.save(runbook)
+    }
+
+    fun startTask(c: StartTask) {
+        val runbook = runbookRepository.findById(c.runbookId).get()
+
+        runbook.startTask(c.taskId, c.userId)
+
+        runbookRepository.save(runbook)
+    }
+
+    fun completeTask(c: CompleteTask) {
+        val runbook = runbookRepository.findById(c.runbookId).get()
+
+        runbook.completeTask(c.taskId, c.userId)
+
+        runbookRepository.save(runbook)
     }
 }
