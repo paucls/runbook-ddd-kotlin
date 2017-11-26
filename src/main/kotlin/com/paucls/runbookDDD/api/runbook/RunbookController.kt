@@ -2,6 +2,7 @@ package com.paucls.runbookDDD.api.runbook
 
 import com.paucls.runbookDDD.application.runbook.RunbookApplicationService
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.CreateRunbook
+import com.paucls.runbookDDD.domain.model.runbook.RunbookAggregate
 import com.paucls.runbookDDD.persistence.RunbookRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -38,9 +39,22 @@ class RunbookController(
         // TODO: Should the Service return the Entity? Should a DTO be used for the API layer or the Entity?
         val runbook = runbookRepository.findById(runbookId).get()
 
-        return ResponseEntity<RunbookDto>(
-                RunbookDto(runbook.runbookId, runbook.name, runbook.ownerId),
-                HttpStatus.CREATED)
+        return ResponseEntity<RunbookDto>(mapToDto(runbook), HttpStatus.CREATED)
+    }
+
+    /**
+     * Queries
+     */
+
+    @RequestMapping(value = "/runbooks", method = arrayOf(RequestMethod.GET))
+    fun getRunbooks(): ResponseEntity<List<RunbookDto>> {
+        val runbooks = runbookRepository.findAll().map(this::mapToDto)
+
+        return ResponseEntity(runbooks, HttpStatus.OK)
+    }
+
+    private fun mapToDto(runbook: RunbookAggregate): RunbookDto {
+        return RunbookDto(runbook.runbookId, runbook.name, runbook.ownerId, runbook.isCompleted())
     }
 
 }

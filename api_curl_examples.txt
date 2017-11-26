@@ -1,2 +1,5 @@
 // Create Runbook
 curl -d '{"name":"Runbook 1"}' -H "Content-Type: application/json" -X POST http://localhost:8080/runbooks
+
+// Get Runbook
+curl http://localhost:8080/runbooks
