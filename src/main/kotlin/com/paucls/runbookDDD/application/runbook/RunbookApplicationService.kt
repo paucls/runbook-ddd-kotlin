@@ -1,5 +1,6 @@
 package com.paucls.runbookDDD.application.runbook
 
+import com.paucls.runbookDDD.application.runbook.RunbookCommand.*
 import com.paucls.runbookDDD.domain.model.runbook.RunbookAggregate
 import com.paucls.runbookDDD.persistence.RunbookRepository
 import com.paucls.runbookDDD.persistence.TaskRepository
@@ -31,14 +32,6 @@ class RunbookApplicationService(
         return taskId
     }
 
-    fun completeRunbook(c: CompleteRunbook) {
-        val runbook = runbookRepository.findById(c.runbookId).get()
-
-        runbook.completeRunbook(c.userId)
-
-        runbookRepository.save(runbook)
-    }
-
     fun startTask(c: StartTask) {
         val runbook = runbookRepository.findById(c.runbookId).get()
 
@@ -51,6 +44,14 @@ class RunbookApplicationService(
         val runbook = runbookRepository.findById(c.runbookId).get()
 
         runbook.completeTask(c.taskId, c.userId)
+
+        runbookRepository.save(runbook)
+    }
+
+    fun completeRunbook(c: CompleteRunbook) {
+        val runbook = runbookRepository.findById(c.runbookId).get()
+
+        runbook.completeRunbook(c.userId)
 
         runbookRepository.save(runbook)
     }

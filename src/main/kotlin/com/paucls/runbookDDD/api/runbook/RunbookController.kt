@@ -1,7 +1,7 @@
 package com.paucls.runbookDDD.api.runbook
 
-import com.paucls.runbookDDD.application.runbook.CreateRunbook
 import com.paucls.runbookDDD.application.runbook.RunbookApplicationService
+import com.paucls.runbookDDD.application.runbook.RunbookCommand.CreateRunbook
 import com.paucls.runbookDDD.persistence.RunbookRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,7 +17,7 @@ class RunbookController(
         val runbookRepository: RunbookRepository
 ) {
 
-    // Hardcoded current user, in a real app it will be come from auth module
+    // Hardcoded current user id, in a real app it will be come from auth module
     private val CURRENT_USER_ID = "user-id"
 
     @RequestMapping("/")

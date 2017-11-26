@@ -1,5 +1,6 @@
 package com.paucls.runbookDDD.application.runbook
 
+import com.paucls.runbookDDD.application.runbook.RunbookCommand.*;
 import com.paucls.runbookDDD.persistence.RunbookRepository
 import com.paucls.runbookDDD.persistence.TaskRepository
 import org.assertj.core.api.Assertions.assertThat
