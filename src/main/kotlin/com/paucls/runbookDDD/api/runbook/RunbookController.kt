@@ -31,7 +31,7 @@ class RunbookController(
      * Commands
      */
 
-    @RequestMapping(value = "/runbooks", method = arrayOf(RequestMethod.POST))
+    @RequestMapping(value = ["/runbooks"], method = arrayOf(RequestMethod.POST))
     fun createRunbook(@RequestBody runbookDto: RunbookDto): ResponseEntity<RunbookDto> {
         val runbookId = runbookApplicationService.createRunbook(
                 CreateRunbook(runbookDto.name, CURRENT_USER_ID))
@@ -46,7 +46,7 @@ class RunbookController(
      * Queries
      */
 
-    @RequestMapping(value = "/runbooks", method = arrayOf(RequestMethod.GET))
+    @RequestMapping(value = ["/runbooks"], method = arrayOf(RequestMethod.GET))
     fun getRunbooks(): ResponseEntity<List<RunbookDto>> {
         val runbooks = runbookRepository.findAll().map(this::mapToDto)
 
