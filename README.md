@@ -2,6 +2,8 @@
 
 A sample microservice using DDD and a clean architecture. Implemented in Kotlin and Spring Boot.
 
+[![Build Status](https://travis-ci.org/paucls/runbook-ddd-kotlin.svg?branch=master)](https://travis-ci.org/paucls/runbook-ddd-kotlin)
+
 ## The Domain
 For this sample application, we will work in an operations team domain. Our focus will be on the concept of a **Runbook** which tracks **Tasks**. 
 
