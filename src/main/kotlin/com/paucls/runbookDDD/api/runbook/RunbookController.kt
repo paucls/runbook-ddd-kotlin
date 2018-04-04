@@ -33,13 +33,11 @@ class RunbookController(
 
     @RequestMapping(value = ["/runbooks"], method = [(RequestMethod.POST)])
     fun createRunbook(@RequestBody runbookDto: RunbookDto): ResponseEntity<RunbookDto> {
-        val runbookId = runbookApplicationService.createRunbook(
-                CreateRunbook(runbookDto.name, CURRENT_USER_ID))
+        val runbookId = runbookApplicationService.createRunbook(CreateRunbook(runbookDto.name, CURRENT_USER_ID))
 
-        // TODO: Should the Service return the Entity? Should a DTO be used for the API layer or the Entity?
         val runbook = runbookRepository.findById(runbookId).get()
 
-        return ResponseEntity<RunbookDto>(mapToDto(runbook), HttpStatus.CREATED)
+        return ResponseEntity(mapToDto(runbook), HttpStatus.CREATED)
     }
 
     /**

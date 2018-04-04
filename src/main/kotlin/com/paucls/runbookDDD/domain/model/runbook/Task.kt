@@ -4,8 +4,11 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
 
+/**
+ * Task entity is part of the Runbook aggregate.
+ */
 @Entity
-class TaskAggregate(
+class Task(
         @Id
         val taskId: String,
         val name: String,

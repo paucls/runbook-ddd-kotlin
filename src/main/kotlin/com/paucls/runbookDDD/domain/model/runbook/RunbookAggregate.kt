@@ -2,6 +2,9 @@ package com.paucls.runbookDDD.domain.model.runbook
 
 import javax.persistence.*
 
+/**
+ * The root entity of the Runbook aggregate - Aggregate Root.
+ */
 @Entity
 class RunbookAggregate(
         @Id
@@ -18,13 +21,12 @@ class RunbookAggregate(
 
     @OneToMany(fetch = FetchType.EAGER, cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
     @JoinColumn(name = "runbook_id")
-    val tasks: MutableMap<String, TaskAggregate> = HashMap<String, TaskAggregate>()
+    val tasks: MutableMap<String, Task> = HashMap()
 
     fun isCompleted() = status == COMPLETED
 
     fun addTask(taskId: String, name: String, description: String, assigneeId: String) {
-        tasks.put(taskId,
-                TaskAggregate(taskId, name, description, assigneeId))
+        tasks[taskId] = Task(taskId, name, description, assigneeId)
     }
 
     fun startTask(taskId: String, userId: String) {
