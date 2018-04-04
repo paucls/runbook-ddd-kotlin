@@ -6,7 +6,7 @@ import javax.persistence.*
  * The root entity of the Runbook aggregate - Aggregate Root.
  */
 @Entity
-class RunbookAggregate(
+class Runbook(
         @Id
         val runbookId: String,
         val name: String,

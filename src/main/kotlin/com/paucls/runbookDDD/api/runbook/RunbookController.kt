@@ -2,7 +2,7 @@ package com.paucls.runbookDDD.api.runbook
 
 import com.paucls.runbookDDD.application.runbook.RunbookApplicationService
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.CreateRunbook
-import com.paucls.runbookDDD.domain.model.runbook.RunbookAggregate
+import com.paucls.runbookDDD.domain.model.runbook.Runbook
 import com.paucls.runbookDDD.persistence.RunbookRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -51,7 +51,7 @@ class RunbookController(
         return ResponseEntity(runbooks, HttpStatus.OK)
     }
 
-    private fun mapToDto(runbook: RunbookAggregate): RunbookDto {
+    private fun mapToDto(runbook: Runbook): RunbookDto {
         return RunbookDto(runbook.runbookId, runbook.name, runbook.ownerId, runbook.isCompleted())
     }
 

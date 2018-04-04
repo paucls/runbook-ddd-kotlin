@@ -1,7 +1,7 @@
 package com.paucls.runbookDDD.application.runbook
 
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.*
-import com.paucls.runbookDDD.domain.model.runbook.RunbookAggregate
+import com.paucls.runbookDDD.domain.model.runbook.Runbook
 import com.paucls.runbookDDD.persistence.RunbookRepository
 import com.paucls.runbookDDD.persistence.TaskRepository
 import com.paucls.runbookDDD.persistence.nextIdentity
@@ -16,7 +16,7 @@ class RunbookApplicationService(
     fun createRunbook(c: CreateRunbook): String {
         val runbookId = runbookRepository.nextIdentity()
 
-        val runbook = RunbookAggregate(runbookId, c.name, c.ownerId)
+        val runbook = Runbook(runbookId, c.name, c.ownerId)
 
         runbookRepository.save(runbook)
         return runbookId

@@ -21,7 +21,7 @@ class RunbookAggregateTest {
 
     @Test
     fun `can create runbook`() {
-        val newRunbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        val newRunbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
 
         assertThat(newRunbook.runbookId).isEqualTo(RUNBOOK_ID)
         assertThat(newRunbook.name).isEqualTo(RUNBOOK_NAME)
@@ -31,7 +31,7 @@ class RunbookAggregateTest {
 
     @Test
     fun `can add task`() {
-        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
 
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
@@ -40,7 +40,7 @@ class RunbookAggregateTest {
 
     @Test
     fun `can start task`() {
-        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
         runbook.startTask(TASK_ID, TASK_ASSIGNEE_ID)
@@ -50,7 +50,7 @@ class RunbookAggregateTest {
 
     @Test
     fun `cannot start task assigned to different user`() {
-        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
         exception.expect(TaskAssignedToDifferentUserException::class.java)
@@ -60,7 +60,7 @@ class RunbookAggregateTest {
 
     @Test
     fun `can complete task`() {
-        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
         runbook.startTask(TASK_ID, TASK_ASSIGNEE_ID)
 
@@ -71,7 +71,7 @@ class RunbookAggregateTest {
 
     @Test
     fun `cannot complete task that is not in progress`() {
-        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
         exception.expect(CanOnlyCompleteInProgressTaskException::class.java)
@@ -81,7 +81,7 @@ class RunbookAggregateTest {
 
     @Test
     fun `can reject task`() {
-        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
         runbook.rejectTask(TASK_ID, OWNER_ID)
@@ -91,7 +91,7 @@ class RunbookAggregateTest {
 
     @Test
     fun `cannot complete runbook if not the owner`() {
-        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
 
         exception.expect(RunbookOwnedByDifferentUserException::class.java)
 
@@ -100,7 +100,7 @@ class RunbookAggregateTest {
 
     @Test
     fun `can complete empty runbook`() {
-        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
 
         runbook.completeRunbook(OWNER_ID)
 
@@ -109,7 +109,7 @@ class RunbookAggregateTest {
 
     @Test
     fun `cannot complete runbook with pending tasks`() {
-        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
         exception.expect(RunBookWithPendingTasksException::class.java)
@@ -119,7 +119,7 @@ class RunbookAggregateTest {
 
     @Test
     fun `can complete with all tasks completed`() {
-        val runbook = RunbookAggregate(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
         runbook.startTask(TASK_ID, TASK_ASSIGNEE_ID)
         runbook.completeTask(TASK_ID, TASK_ASSIGNEE_ID)
