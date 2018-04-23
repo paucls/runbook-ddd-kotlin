@@ -46,6 +46,6 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     runtime("com.h2database:h2")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
 	testCompile("org.jetbrains.kotlin:kotlin-test:${kotlinVersion}")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }

@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import kotlin.test.assertFailsWith
 
-class RunbookAggregateTest {
+class RunbookTest {
 
     private val RUNBOOK_ID = "runbook-id"
     private val RUNBOOK_NAME = "runbook-name"
