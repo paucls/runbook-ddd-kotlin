@@ -8,7 +8,7 @@ import com.paucls.runbookDDD.persistence.nextIdentity
 import org.springframework.stereotype.Service
 
 @Service
-class RunbookApplicationService(
+class RunbookService(
         val runbookRepository: RunbookRepository,
         val taskRepository: TaskRepository
 ) {

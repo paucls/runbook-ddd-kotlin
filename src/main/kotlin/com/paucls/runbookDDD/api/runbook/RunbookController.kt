@@ -1,6 +1,6 @@
 package com.paucls.runbookDDD.api.runbook
 
-import com.paucls.runbookDDD.application.runbook.RunbookApplicationService
+import com.paucls.runbookDDD.application.runbook.RunbookService
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.CreateRunbook
 import com.paucls.runbookDDD.domain.model.runbook.Runbook
 import com.paucls.runbookDDD.persistence.RunbookRepository
@@ -10,22 +10,15 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
 class RunbookController(
-        val runbookApplicationService: RunbookApplicationService,
+        val runbookApplicationService: RunbookService,
         val runbookRepository: RunbookRepository
 ) {
 
     // Hardcoded current user id, in a real app it will be come from auth module
     private val CURRENT_USER_ID = "user-id"
-
-    @RequestMapping("/")
-    @ResponseBody
-    fun home(): String {
-        return "Runbook App!"
-    }
 
     /**
      * Commands

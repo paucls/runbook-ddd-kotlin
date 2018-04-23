@@ -1,6 +1,10 @@
 package com.paucls.runbookDDD.application.runbook
 
-import com.paucls.runbookDDD.application.runbook.RunbookCommand.*;
+import com.paucls.runbookDDD.application.runbook.RunbookCommand.AddTask
+import com.paucls.runbookDDD.application.runbook.RunbookCommand.CompleteRunbook
+import com.paucls.runbookDDD.application.runbook.RunbookCommand.CompleteTask
+import com.paucls.runbookDDD.application.runbook.RunbookCommand.CreateRunbook
+import com.paucls.runbookDDD.application.runbook.RunbookCommand.StartTask
 import com.paucls.runbookDDD.persistence.RunbookRepository
 import com.paucls.runbookDDD.persistence.TaskRepository
 import org.assertj.core.api.Assertions.assertThat
@@ -13,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-class RunbookApplicationServiceIntegrationTest {
+class RunbookServiceIntegrationTest {
 
     private val RUNBOOK_NAME = "runbook-name"
     private val OWNER_ID = "owner-id"
@@ -28,7 +32,7 @@ class RunbookApplicationServiceIntegrationTest {
     private lateinit var taskRepository: TaskRepository
 
     @Autowired
-    private lateinit var runbookApplicationService: RunbookApplicationService
+    private lateinit var runbookApplicationService: RunbookService
 
     @Before
     fun setup() {
