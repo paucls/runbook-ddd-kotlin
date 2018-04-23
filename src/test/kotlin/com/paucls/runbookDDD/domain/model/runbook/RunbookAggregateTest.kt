@@ -1,9 +1,8 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.ExpectedException
+import kotlin.test.assertFailsWith
 
 class RunbookAggregateTest {
 
@@ -14,10 +13,6 @@ class RunbookAggregateTest {
     private val TASK_NAME = "task-name"
     private val TASK_DESCRIPTION = "task-description"
     private val TASK_ASSIGNEE_ID = "assignee-id"
-
-    @Rule
-    @JvmField
-    val exception = ExpectedException.none()
 
     @Test
     fun `can create runbook`() {
@@ -53,9 +48,9 @@ class RunbookAggregateTest {
         val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
-        exception.expect(TaskAssignedToDifferentUserException::class.java)
-
-        runbook.startTask(TASK_ID, "no-assignee-user-id")
+        assertFailsWith<TaskAssignedToDifferentUserException> {
+            runbook.startTask(TASK_ID, "no-assignee-user-id")
+        }
     }
 
     @Test
@@ -74,9 +69,9 @@ class RunbookAggregateTest {
         val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
-        exception.expect(CanOnlyCompleteInProgressTaskException::class.java)
-
-        runbook.completeTask(TASK_ID, TASK_ASSIGNEE_ID)
+        assertFailsWith<CanOnlyCompleteInProgressTaskException> {
+            runbook.completeTask(TASK_ID, TASK_ASSIGNEE_ID)
+        }
     }
 
     @Test
@@ -93,9 +88,9 @@ class RunbookAggregateTest {
     fun `cannot complete runbook if not the owner`() {
         val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
 
-        exception.expect(RunbookOwnedByDifferentUserException::class.java)
-
-        runbook.completeRunbook("no-owner-user-id")
+        assertFailsWith<RunbookOwnedByDifferentUserException> {
+            runbook.completeRunbook("no-owner-user-id")
+        }
     }
 
     @Test
@@ -112,9 +107,9 @@ class RunbookAggregateTest {
         val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
-        exception.expect(RunBookWithPendingTasksException::class.java)
-
-        runbook.completeRunbook(OWNER_ID)
+        assertFailsWith<RunBookWithPendingTasksException> {
+            runbook.completeRunbook(OWNER_ID)
+        }
     }
 
     @Test

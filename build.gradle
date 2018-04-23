@@ -12,7 +12,7 @@ buildscript {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
 		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
-		classpath "org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}"
+		classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
 	}
 }
 
@@ -47,4 +47,5 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     runtime("com.h2database:h2")
     testCompile("org.springframework.boot:spring-boot-starter-test")
+	testCompile("org.jetbrains.kotlin:kotlin-test:${kotlinVersion}")
 }
