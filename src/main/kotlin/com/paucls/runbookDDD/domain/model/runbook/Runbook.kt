@@ -1,11 +1,12 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
-import javax.persistence.*
+import org.springframework.data.annotation.Id
+import org.springframework.data.redis.core.RedisHash
 
 /**
  * The root entity of the Runbook aggregate - Aggregate Root.
  */
-@Entity
+@RedisHash("Runbook")
 class Runbook(
         @Id
         val runbookId: String,
@@ -19,8 +20,6 @@ class Runbook(
 
     private var status = OPEN
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-    @JoinColumn(name = "runbook_id")
     val tasks: MutableMap<String, Task> = HashMap()
 
     fun isCompleted() = status == COMPLETED

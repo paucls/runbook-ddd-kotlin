@@ -1,10 +1,12 @@
 package com.paucls.runbookDDD.persistence
 
 import com.paucls.runbookDDD.domain.model.runbook.Task
-import org.springframework.data.jpa.repository.JpaRepository
-import java.util.*
+import org.springframework.data.repository.CrudRepository
+import org.springframework.stereotype.Repository
+import java.util.UUID
 
-interface TaskRepository : JpaRepository<Task, String>
+@Repository
+interface TaskRepository : CrudRepository<Task, String>
 
 fun TaskRepository.nextIdentity(): String {
     return UUID.randomUUID().toString()

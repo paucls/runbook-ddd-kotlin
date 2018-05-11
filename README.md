@@ -21,3 +21,12 @@ Links to some of the articles and documentation used to implement this project:
 - Implementing Domain-Driven Design, Vaughn Vernon.
 - IDDD Samples https://github.com/VaughnVernon/IDDD_Samples
 - Building web applications with Spring Boot and Kotlin https://spring.io/guides/tutorials/spring-boot-kotlin/
+
+TODO:
+- Configure REDIS 
+http://www.baeldung.com/spring-data-redis-tutorial
+https://docs.spring.io/spring-data/redis/docs/2.0.7.RELEASE/reference/html/#get-started
+https://github.com/spring-projects/spring-data-examples/tree/master/redis/repositories
+
+- With Redis the Tasks are saved directly the in the Runbook aggregate, No need for a Tasks repo then. And Task
+does not need the RedisHash.
