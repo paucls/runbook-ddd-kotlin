@@ -1,12 +1,10 @@
 buildscript {
 	ext {
-		kotlinVersion = '1.2.10'
-		springBootVersion = '2.0.0.M7'
+		kotlinVersion = '1.2.20'
+		springBootVersion = '2.0.2.RELEASE'
 	}
 	repositories {
 		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -27,25 +25,29 @@ group = 'com.paucls'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 compileKotlin {
-	kotlinOptions.jvmTarget = "1.8"
+	kotlinOptions {
+		freeCompilerArgs = ["-Xjsr305=strict"]
+		jvmTarget = "1.8"
+	}
 }
 compileTestKotlin {
-	kotlinOptions.jvmTarget = "1.8"
+	kotlinOptions {
+		freeCompilerArgs = ["-Xjsr305=strict"]
+		jvmTarget = "1.8"
+	}
 }
 
 repositories {
 	mavenCentral()
-	maven { url "https://repo.spring.io/snapshot" }
-	maven { url "https://repo.spring.io/milestone" }
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
-    compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
-    compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    runtime("com.h2database:h2")
-	testCompile("org.jetbrains.kotlin:kotlin-test:${kotlinVersion}")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('com.fasterxml.jackson.module:jackson-module-kotlin')
+	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	compile("org.jetbrains.kotlin:kotlin-reflect")
+	runtime('com.h2database:h2')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile("org.jetbrains.kotlin:kotlin-test")
 }
