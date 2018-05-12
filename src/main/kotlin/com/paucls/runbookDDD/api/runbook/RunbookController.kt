@@ -3,7 +3,7 @@ package com.paucls.runbookDDD.api.runbook
 import com.paucls.runbookDDD.application.runbook.RunbookService
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.CreateRunbook
 import com.paucls.runbookDDD.domain.model.runbook.Runbook
-import com.paucls.runbookDDD.persistence.RunbookRepository
+import com.paucls.runbookDDD.infrastructure.persistence.RunbookRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller

@@ -2,9 +2,9 @@ package com.paucls.runbookDDD.application.runbook
 
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.*
 import com.paucls.runbookDDD.domain.model.runbook.Runbook
-import com.paucls.runbookDDD.persistence.RunbookRepository
-import com.paucls.runbookDDD.persistence.TaskRepository
-import com.paucls.runbookDDD.persistence.nextIdentity
+import com.paucls.runbookDDD.infrastructure.persistence.RunbookRepository
+import com.paucls.runbookDDD.infrastructure.persistence.TaskRepository
+import com.paucls.runbookDDD.infrastructure.persistence.nextIdentity
 import org.springframework.stereotype.Service
 
 @Service

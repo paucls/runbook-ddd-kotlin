@@ -1,4 +1,4 @@
-package com.paucls.runbookDDD.persistence
+package com.paucls.runbookDDD.infrastructure.persistence
 
 import com.paucls.runbookDDD.domain.model.runbook.Task
 import org.springframework.data.repository.CrudRepository

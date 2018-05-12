@@ -6,8 +6,8 @@ import com.paucls.runbookDDD.application.runbook.RunbookCommand.CompleteTask
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.CreateRunbook
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.StartTask
 import com.paucls.runbookDDD.domain.model.runbook.Runbook
-import com.paucls.runbookDDD.persistence.RunbookRepository
-import com.paucls.runbookDDD.persistence.TaskRepository
+import com.paucls.runbookDDD.infrastructure.persistence.RunbookRepository
+import com.paucls.runbookDDD.infrastructure.persistence.TaskRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
