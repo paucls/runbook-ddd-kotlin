@@ -1,8 +1,5 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
-import org.springframework.data.annotation.Id
-import org.springframework.data.redis.core.RedisHash
-
 /**
  * Task entity is part of the Runbook aggregate.
  */
