@@ -16,7 +16,7 @@ class RunbookService(
     fun createRunbook(c: CreateRunbook): String {
         val runbookId = runbookRepository.nextIdentity()
 
-        val runbook = Runbook(runbookId, c.name, c.ownerId)
+        val runbook = Runbook(runbookId, c.name, c.userId)
 
         runbookRepository.save(runbook)
         return runbookId
