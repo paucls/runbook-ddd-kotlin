@@ -1,8 +1,9 @@
 package com.paucls.runbookDDD.api.runbook
 
-import com.paucls.runbookDDD.application.runbook.RunbookService
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.CreateRunbook
+import com.paucls.runbookDDD.application.runbook.RunbookService
 import com.paucls.runbookDDD.domain.model.runbook.Runbook
+import com.paucls.runbookDDD.infrastructure.auth.AuthenticationFacade
 import com.paucls.runbookDDD.infrastructure.persistence.RunbookRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -13,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod
 
 @Controller
 class RunbookController(
+        val authenticationFacade: AuthenticationFacade,
         val runbookApplicationService: RunbookService,
         val runbookRepository: RunbookRepository
 ) {
-
-    // Hardcoded current user id, in a real app it will be come from auth module
-    private val CURRENT_USER_ID = "user-id"
 
     /**
      * Commands
@@ -26,7 +25,8 @@ class RunbookController(
 
     @RequestMapping(value = ["/runbooks"], method = [(RequestMethod.POST)])
     fun createRunbook(@RequestBody runbookDto: RunbookDto): ResponseEntity<RunbookDto> {
-        val runbookId = runbookApplicationService.createRunbook(CreateRunbook(runbookDto.name, CURRENT_USER_ID))
+        val userId = authenticationFacade.getCurrentUserId()
+        val runbookId = runbookApplicationService.createRunbook(CreateRunbook(runbookDto.name, userId))
 
         val runbook = runbookRepository.findById(runbookId).get()
 
