@@ -7,7 +7,6 @@ import com.paucls.runbookDDD.application.runbook.RunbookCommand.CreateRunbook
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.StartTask
 import com.paucls.runbookDDD.domain.model.runbook.Runbook
 import com.paucls.runbookDDD.infrastructure.persistence.RunbookRepository
-import com.paucls.runbookDDD.infrastructure.persistence.TaskRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -30,14 +29,10 @@ class RunbookServiceIntegrationTest {
     private lateinit var runbookRepository: RunbookRepository
 
     @Autowired
-    private lateinit var taskRepository: TaskRepository
-
-    @Autowired
     private lateinit var runbookApplicationService: RunbookService
 
     @Before
     fun setup() {
-        taskRepository.deleteAll()
         runbookRepository.deleteAll()
     }
 
@@ -80,9 +75,6 @@ class RunbookServiceIntegrationTest {
         runbookApplicationService.completeTask(CompleteTask(runbookId, taskId, TASK_ASSIGNEE_ID))
 
         // Then
-        // TODO: Tasks is empty, with Redis, they are saved directly in Runbook. No need for a repo then.
-//        val task = taskRepository.findById(taskId)
-
         val runbook: Runbook = runbookRepository.findById(runbookId).get()
         val task = runbook.tasks[taskId]
         assertThat(task?.name).isEqualTo(TASK_NAME)
