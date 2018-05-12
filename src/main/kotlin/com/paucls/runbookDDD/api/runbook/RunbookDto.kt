@@ -4,5 +4,6 @@ data class RunbookDto(
     var runbookId: String = "",
     var name: String = "",
     var ownerId: String = "",
-    var isCompleted: Boolean = false
+    var isCompleted: Boolean = false,
+    val tasks : List<TaskDto> = emptyList()
 )

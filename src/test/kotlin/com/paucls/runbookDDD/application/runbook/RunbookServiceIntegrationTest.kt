@@ -5,8 +5,8 @@ import com.paucls.runbookDDD.application.runbook.RunbookCommand.CompleteRunbook
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.CompleteTask
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.CreateRunbook
 import com.paucls.runbookDDD.application.runbook.RunbookCommand.StartTask
-import com.paucls.runbookDDD.persistence.RunbookRepository
-import com.paucls.runbookDDD.persistence.TaskRepository
+import com.paucls.runbookDDD.domain.model.runbook.Runbook
+import com.paucls.runbookDDD.infrastructure.persistence.RunbookRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -29,14 +29,10 @@ class RunbookServiceIntegrationTest {
     private lateinit var runbookRepository: RunbookRepository
 
     @Autowired
-    private lateinit var taskRepository: TaskRepository
-
-    @Autowired
     private lateinit var runbookApplicationService: RunbookService
 
     @Before
     fun setup() {
-        taskRepository.deleteAll()
         runbookRepository.deleteAll()
     }
 
@@ -58,7 +54,7 @@ class RunbookServiceIntegrationTest {
         val runbookId = runbookApplicationService.createRunbook(CreateRunbook(RUNBOOK_NAME, OWNER_ID))
 
         // When
-        val taskId = runbookApplicationService.addTask(AddTask(runbookId, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID))
+        val taskId = runbookApplicationService.addTask(AddTask(runbookId, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID, OWNER_ID))
 
         // Then
         val runbook = runbookRepository.findById(runbookId).get()
@@ -72,24 +68,25 @@ class RunbookServiceIntegrationTest {
     fun `complete task`() {
         // Given
         val runbookId = runbookApplicationService.createRunbook(CreateRunbook(RUNBOOK_NAME, OWNER_ID))
-        val taskId = runbookApplicationService.addTask(AddTask(runbookId, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID))
+        val taskId = runbookApplicationService.addTask(AddTask(runbookId, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID, OWNER_ID))
         runbookApplicationService.startTask(StartTask(runbookId, taskId, TASK_ASSIGNEE_ID))
 
         // When
         runbookApplicationService.completeTask(CompleteTask(runbookId, taskId, TASK_ASSIGNEE_ID))
 
         // Then
-        val task = taskRepository.findById(taskId).get()
-        assertThat(task.name).isEqualTo(TASK_NAME)
-        assertThat(task.description).isEqualTo(TASK_DESCRIPTION)
-        assertThat(task.isCompleted()).isTrue()
+        val runbook: Runbook = runbookRepository.findById(runbookId).get()
+        val task = runbook.tasks[taskId]
+        assertThat(task?.name).isEqualTo(TASK_NAME)
+        assertThat(task?.description).isEqualTo(TASK_DESCRIPTION)
+        assertThat(task?.isCompleted()).isTrue()
     }
 
     @Test
     fun `complete runbook`() {
         // Given
         val runbookId = runbookApplicationService.createRunbook(CreateRunbook(RUNBOOK_NAME, OWNER_ID))
-        val taskId = runbookApplicationService.addTask(AddTask(runbookId, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID))
+        val taskId = runbookApplicationService.addTask(AddTask(runbookId, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID, OWNER_ID))
         runbookApplicationService.startTask(StartTask(runbookId, taskId, TASK_ASSIGNEE_ID))
         runbookApplicationService.completeTask(CompleteTask(runbookId, taskId, TASK_ASSIGNEE_ID))
 

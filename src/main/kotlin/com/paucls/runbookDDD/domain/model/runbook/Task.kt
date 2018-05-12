@@ -1,30 +1,24 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
+import org.springframework.data.annotation.Id
+import org.springframework.data.redis.core.RedisHash
 
 /**
  * Task entity is part of the Runbook aggregate.
  */
-@Entity
 class Task(
-        @Id
         val taskId: String,
         val name: String,
         val description: String,
         val assigneeId: String
 ) {
+    // TODO: Create a an enum or a type for the states
     companion object {
         val OPEN = "OPEN"
         val IN_PROGRESS = "IN_PROGRESS"
         val COMPLETED = "COMPLETED"
         val REJECTED = "REJECTED"
     }
-
-    // Used by JPA
-    @Column(name = "runbook_id")
-    private lateinit var runbookId: String
 
     private var status = OPEN
 
