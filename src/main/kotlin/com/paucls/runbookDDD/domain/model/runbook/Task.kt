@@ -6,9 +6,7 @@ import org.springframework.data.redis.core.RedisHash
 /**
  * Task entity is part of the Runbook aggregate.
  */
-@RedisHash("Task")
 class Task(
-        @Id
         val taskId: String,
         val name: String,
         val description: String,
