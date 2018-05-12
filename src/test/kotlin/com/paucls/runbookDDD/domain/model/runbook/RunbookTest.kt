@@ -31,6 +31,7 @@ class RunbookTest {
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
         assertThat(runbook.tasks.size).isOne()
+        assertThat(runbook.domainEvents()).containsExactly(TaskAdded(TASK_ID, TASK_NAME, TASK_ASSIGNEE_ID))
     }
 
     @Test

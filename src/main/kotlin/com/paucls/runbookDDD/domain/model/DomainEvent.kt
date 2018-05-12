@@ -1,6 +1,6 @@
 package com.paucls.runbookDDD.domain.model
 
 /**
- * A DDD Value Object
+ * A DDD Event
  */
-interface ValueObject
+interface DomainEvent

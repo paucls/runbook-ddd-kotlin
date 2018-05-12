@@ -1,5 +1,6 @@
 package com.paucls.runbookDDD.domain.model.runbook
 
+import com.paucls.runbookDDD.domain.model.AggregateRoot
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 
@@ -12,7 +13,8 @@ class Runbook(
         val runbookId: String,
         val name: String,
         val ownerId: String
-) {
+) : AggregateRoot() {
+
     companion object {
         val OPEN = "OPEN"
         val COMPLETED = "COMPLETED"
@@ -26,6 +28,8 @@ class Runbook(
 
     fun addTask(taskId: String, name: String, description: String, assigneeId: String) {
         tasks[taskId] = Task(taskId, name, description, assigneeId)
+
+        registerEvent(TaskAdded(taskId, name, assigneeId))
     }
 
     fun startTask(taskId: String, userId: String) {
