@@ -71,7 +71,8 @@ class RunbookController(
                 runbookId = runbook.runbookId,
                 name = runbook.name,
                 ownerId = runbook.ownerId,
-                isCompleted = runbook.isCompleted())
+                isCompleted = runbook.isCompleted(),
+                tasks = runbook.tasks.values.map(::mapToTaskDto))
     }
 
     private fun mapToTaskDto(task: Task): TaskDto {
