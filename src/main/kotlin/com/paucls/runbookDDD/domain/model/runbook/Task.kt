@@ -7,7 +7,7 @@ class Task(
         val taskId: String,
         val name: String,
         val description: String,
-        val assigneeId: String
+        var assigneeId: String?
 ) {
     // TODO: Create a an enum or a type for the states
     companion object {
@@ -18,6 +18,10 @@ class Task(
     }
 
     private var status = OPEN
+
+    fun assign(assigneeId: String) {
+        this.assigneeId = assigneeId
+    }
 
     fun startTask(userId: String) {
         if (userId != assigneeId) {

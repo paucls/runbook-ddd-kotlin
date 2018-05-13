@@ -26,10 +26,20 @@ class Runbook(
 
     fun isCompleted() = status == COMPLETED
 
-    fun addTask(taskId: String, name: String, description: String, assigneeId: String) {
+    fun addTask(taskId: String, name: String, description: String, assigneeId: String?) {
         tasks[taskId] = Task(taskId, name, description, assigneeId)
 
-        registerEvent(TaskAdded(taskId, name, assigneeId))
+        registerEvent(TaskAdded(runbookId, taskId))
+
+        if (assigneeId != null) {
+            registerEvent(TaskAssigned(runbookId, taskId, assigneeId, name))
+        }
+    }
+
+    fun assignTask(taskId: String, assigneeId: String, userId: String) {
+        tasks[taskId]?.assign(assigneeId)
+
+        registerEvent(TaskAssigned(runbookId, taskId, assigneeId, tasks[taskId]!!.name))
     }
 
     fun startTask(taskId: String, userId: String) {

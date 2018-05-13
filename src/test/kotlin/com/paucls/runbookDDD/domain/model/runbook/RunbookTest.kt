@@ -31,7 +31,28 @@ class RunbookTest {
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
 
         assertThat(runbook.tasks.size).isOne()
-        assertThat(runbook.domainEvents()).containsExactly(TaskAdded(TASK_ID, TASK_NAME, TASK_ASSIGNEE_ID))
+        assertThat(runbook.domainEvents()).contains(TaskAdded(RUNBOOK_ID, TASK_ID))
+    }
+
+    @Test
+    fun `can add unassigned task`() {
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+
+        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, null)
+
+        assertThat(runbook.tasks.size).isOne()
+        assertThat(runbook.domainEvents()).containsExactly(TaskAdded(RUNBOOK_ID, TASK_ID))
+    }
+
+    @Test
+    fun `can assign task`() {
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, null)
+
+        runbook.assignTask(TASK_ID, TASK_ASSIGNEE_ID, OWNER_ID)
+
+        assertThat(runbook.tasks[TASK_ID]?.assigneeId).isEqualTo(TASK_ASSIGNEE_ID)
+        assertThat(runbook.domainEvents()).contains(TaskAssigned(RUNBOOK_ID, TASK_ID, TASK_ASSIGNEE_ID, TASK_NAME))
     }
 
     @Test

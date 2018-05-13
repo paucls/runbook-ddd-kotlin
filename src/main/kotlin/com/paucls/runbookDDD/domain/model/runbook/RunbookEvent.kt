@@ -4,4 +4,12 @@ import com.paucls.runbookDDD.domain.model.DomainEvent
 
 sealed class RunbookEvent : DomainEvent
 
-data class TaskAdded(val taskId: String, val name: String, val assigneeId: String) : RunbookEvent()
+data class TaskAdded(
+        val runbookId: String,
+        val taskId: String) : RunbookEvent()
+
+data class TaskAssigned(
+        val runbookId: String,
+        val taskId: String,
+        val assigneeId: String,
+        val name: String) : RunbookEvent()

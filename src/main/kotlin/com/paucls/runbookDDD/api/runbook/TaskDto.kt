@@ -4,5 +4,5 @@ data class TaskDto(
         val taskId: String?,
         val name: String = "",
         val description: String = "",
-        val assigneeId: String = ""
+        val assigneeId: String? = null
 )
