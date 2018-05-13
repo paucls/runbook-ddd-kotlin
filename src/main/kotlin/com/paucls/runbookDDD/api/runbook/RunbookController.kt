@@ -80,6 +80,9 @@ class RunbookController(
                 taskId = task.taskId,
                 name = task.name,
                 description = task.description,
-                assigneeId = task.assigneeId)
+                assigneeId = task.assigneeId,
+                isInProgress = task.isInProgress(),
+                isCompleted = task.isCompleted(),
+                isRejected = task.isRejected())
     }
 }

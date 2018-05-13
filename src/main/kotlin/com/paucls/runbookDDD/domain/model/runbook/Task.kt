@@ -9,15 +9,7 @@ class Task(
         val description: String,
         var assigneeId: String?
 ) {
-    // TODO: Create a an enum or a type for the states
-    companion object {
-        val OPEN = "OPEN"
-        val IN_PROGRESS = "IN_PROGRESS"
-        val COMPLETED = "COMPLETED"
-        val REJECTED = "REJECTED"
-    }
-
-    private var status = OPEN
+    private var state: TaskState = TaskState.OPEN
 
     fun assign(assigneeId: String) {
         this.assigneeId = assigneeId
@@ -31,7 +23,7 @@ class Task(
             throw TaskAssignedToDifferentUserException()
         }
 
-        status = IN_PROGRESS
+        state = TaskState.IN_PROGRESS
     }
 
     fun completeTask() {
@@ -39,16 +31,23 @@ class Task(
             throw CanOnlyCompleteInProgressTaskException()
         }
 
-        status = COMPLETED
+        state = TaskState.COMPLETED
     }
 
     fun rejectTask() {
-        status = REJECTED
+        state = TaskState.REJECTED
     }
 
-    fun isInProgress(): Boolean = status == IN_PROGRESS
+    fun isInProgress(): Boolean = state == TaskState.IN_PROGRESS
 
-    fun isCompleted(): Boolean = status == COMPLETED
+    fun isCompleted(): Boolean = state == TaskState.COMPLETED
 
-    fun isRejected(): Boolean = status == REJECTED
+    fun isRejected(): Boolean = state == TaskState.REJECTED
+}
+
+private enum class TaskState {
+    OPEN,
+    IN_PROGRESS,
+    COMPLETED,
+    REJECTED,
 }
