@@ -37,21 +37,21 @@ class Runbook(
     }
 
     fun assignTask(taskId: String, assigneeId: String, userId: String) {
-        tasks[taskId]?.assign(assigneeId)
+        getTask(taskId).assign(assigneeId)
 
-        registerEvent(TaskAssigned(runbookId, taskId, assigneeId, tasks[taskId]!!.name))
+        registerEvent(TaskAssigned(runbookId, taskId, assigneeId, getTask(taskId).name))
     }
 
     fun startTask(taskId: String, userId: String) {
-        tasks[taskId]?.startTask(userId)
+        getTask(taskId).startTask(userId)
     }
 
     fun completeTask(taskId: String, userId: String) {
-        tasks[taskId]?.completeTask()
+        getTask(taskId).completeTask()
     }
 
     fun rejectTask(taskId: String, userId: String) {
-        tasks[taskId]?.rejectTask()
+        getTask(taskId).rejectTask()
     }
 
     fun completeRunbook(userId: String) {
@@ -66,4 +66,6 @@ class Runbook(
 
         status = COMPLETED
     }
+
+    private fun getTask(taskId: String) = tasks[taskId] ?: throw NonExistentTaskException()
 }

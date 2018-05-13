@@ -156,4 +156,12 @@ class RunbookTest {
         assertThat(runbook.isCompleted()).isTrue()
     }
 
+    @Test
+    fun `cannot operate on a non-existent task`() {
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+
+        assertFailsWith<NonExistentTaskException> {
+            runbook.startTask(TASK_ID, TASK_ASSIGNEE_ID)
+        }
+    }
 }
