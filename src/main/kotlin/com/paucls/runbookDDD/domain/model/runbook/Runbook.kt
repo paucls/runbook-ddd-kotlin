@@ -15,16 +15,11 @@ class Runbook(
         val ownerId: String
 ) : AggregateRoot() {
 
-    companion object {
-        val OPEN = "OPEN"
-        val COMPLETED = "COMPLETED"
-    }
-
-    private var status = OPEN
-
     val tasks: MutableMap<String, Task> = HashMap()
 
-    fun isCompleted() = status == COMPLETED
+    private var state: RunbookState = RunbookState.OPEN
+
+    fun isCompleted() = state == RunbookState.CLOSE
 
     fun addTask(taskId: String, name: String, description: String, assigneeId: String?) {
         tasks[taskId] = Task(taskId, name, description, assigneeId)
@@ -64,8 +59,13 @@ class Runbook(
             throw RunBookWithPendingTasksException()
         }
 
-        status = COMPLETED
+        state = RunbookState.CLOSE
     }
 
     private fun getTask(taskId: String) = tasks[taskId] ?: throw NonExistentTaskException()
+}
+
+private enum class RunbookState {
+    OPEN,
+    CLOSE
 }
