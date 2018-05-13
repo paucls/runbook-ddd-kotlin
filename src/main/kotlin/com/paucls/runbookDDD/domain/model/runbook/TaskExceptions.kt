@@ -4,3 +4,4 @@ import com.paucls.runbookDDD.domain.model.DomainException
 
 class CanOnlyCompleteInProgressTaskException : DomainException()
 class TaskAssignedToDifferentUserException : DomainException()
+class UnassignedTaskCannotBeStartedException : DomainException()

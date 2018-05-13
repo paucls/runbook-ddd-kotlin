@@ -24,6 +24,9 @@ class Task(
     }
 
     fun startTask(userId: String) {
+        if (assigneeId == null) {
+            throw UnassignedTaskCannotBeStartedException()
+        }
         if (userId != assigneeId) {
             throw TaskAssignedToDifferentUserException()
         }

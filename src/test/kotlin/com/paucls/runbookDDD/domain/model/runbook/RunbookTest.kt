@@ -66,6 +66,16 @@ class RunbookTest {
     }
 
     @Test
+    fun `cannot start unassigned task`() {
+        val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
+        runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, null)
+
+        assertFailsWith<UnassignedTaskCannotBeStartedException> {
+            runbook.startTask(TASK_ID, "user-id")
+        }
+    }
+
+    @Test
     fun `cannot start task assigned to different user`() {
         val runbook = Runbook(RUNBOOK_ID, RUNBOOK_NAME, OWNER_ID)
         runbook.addTask(TASK_ID, TASK_NAME, TASK_DESCRIPTION, TASK_ASSIGNEE_ID)
