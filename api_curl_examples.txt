@@ -1,5 +1,6 @@
 // Create Runbook
 curl -d '{"name":"Runbook 1"}' -H "Content-Type: application/json" -X POST http://localhost:8080/runbooks
+curl -d '{"name":"Runbook 2"}' -H "Content-Type: application/json" -X POST http://localhost:8080/runbooks
 
 // Create Task
 curl -d '{"name":"Task 1", "description": "desc 1", "assigneeId": "user-id"}' -H "Content-Type: application/json" -X POST http://localhost:8080/runbooks/{runbookId}/tasks
