@@ -31,7 +31,9 @@ To keep it simple, there are no dependencies between tasks thus can be completed
 Links to some of the articles and documentation used to implement this project:
 
 - Implementing Domain-Driven Design, Vaughn Vernon.
-- IDDD Samples https://github.com/VaughnVernon/IDDD_Samples
+- IDDD Samples https://github.com/VaughnVernon/IDDD_Samples.
+- Spring - Domain event publication from aggregate roots.
+https://spring.io/blog/2017/01/30/what-s-new-in-spring-data-release-ingalls#domain-event-publication-from-aggregate-roots
 - Building web applications with Spring Boot and Kotlin https://spring.io/guides/tutorials/spring-boot-kotlin/
 - Retrieve User Information in Spring Security http://www.baeldung.com/get-user-in-spring-security
 - Configure Redis: 
