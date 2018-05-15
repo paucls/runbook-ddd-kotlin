@@ -13,7 +13,7 @@ class Runbook(
         val runbookId: String,
         val name: String,
         val ownerId: String
-) : AggregateRoot() {
+) : AggregateRoot<RunbookEvent>() {
 
     val tasks: MutableMap<String, Task> = HashMap()
 

@@ -9,15 +9,23 @@ import java.util.Collections
 /**
  * Aggregate Root base class based in the Spring Data one {@link org.springframework.data.domain.AbstractAggregateRoot}.
  */
-abstract class AggregateRoot {
+abstract class AggregateRoot<EventType> {
 
     @Transient
-    private val domainEvents = ArrayList<DomainEvent>()
+    private val domainEvents = ArrayList<EventType>()
+
+    /**
+     * All domain events currently captured by the aggregate.
+     */
+    @DomainEvents
+    fun domainEvents(): Collection<EventType> {
+        return Collections.unmodifiableList<EventType>(domainEvents)
+    }
 
     /**
      * Registers the given event object for publication on a call to a Spring Data repository's save methods.
      */
-    protected fun registerEvent(event: DomainEvent): DomainEvent {
+    protected fun registerEvent(event: EventType): EventType {
         this.domainEvents.add(event)
         return event
     }
@@ -29,14 +37,6 @@ abstract class AggregateRoot {
     @AfterDomainEventPublication
     protected fun clearDomainEvents() {
         this.domainEvents.clear()
-    }
-
-    /**
-     * All domain events currently captured by the aggregate.
-     */
-    @DomainEvents
-    fun domainEvents(): Collection<DomainEvent> {
-        return Collections.unmodifiableList(domainEvents)
     }
 
 }
