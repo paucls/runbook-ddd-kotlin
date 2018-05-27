@@ -54,13 +54,14 @@ class Runbook(
             throw RunbookOwnedByDifferentUserException()
         }
 
-        val hasPendingTask = tasks.values.any { !it.isCompleted() }
-        if (hasPendingTask) {
+        if (hasPendingTasks()) {
             throw RunBookWithPendingTasksException()
         }
 
         state = RunbookState.CLOSE
     }
+
+    private fun hasPendingTasks() = tasks.values.any { !it.isCompleted() }
 
     private fun getTask(taskId: String) = tasks[taskId] ?: throw NonExistentTaskException()
 }
