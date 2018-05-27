@@ -50,15 +50,19 @@ class Runbook(
     }
 
     fun completeRunbook(userId: String) {
-        if (userId != ownerId) {
-            throw RunbookOwnedByDifferentUserException()
-        }
+        validateIsOwner(userId)
 
         if (hasPendingTasks()) {
             throw RunBookWithPendingTasksException()
         }
 
         state = RunbookState.CLOSE
+    }
+
+    private fun validateIsOwner(userId: String) {
+        if (ownerId != userId) {
+            throw RunbookOwnedByDifferentUserException()
+        }
     }
 
     private fun hasPendingTasks() = tasks.values.any { !it.isCompleted() }
